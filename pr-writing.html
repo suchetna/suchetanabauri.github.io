@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PR Writing Samples — Suchetana Bauri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f8f6f1;
+    --accent: #2d5a9e;
+    --accent-light: #e8eef6;
+    --muted: #6b6b6b;
+    --border: #d4d0c8;
+    --warm: #f0ece4;
+    --white: #ffffff;
+    --mono-teal: #1a6b5a;
+    --mono-teal-light: #e4f0ec;
+    --isb-wine: #7a2e4a;
+    --isb-wine-light: #f4e8ee;
+    --event-amber: #8a6d2e;
+    --event-amber-light: #f5f0e2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(248, 246, 241, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav a { text-decoration: none; color: var(--ink); }
+
+  .nav-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--accent); }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    padding: 8rem 2rem 3rem;
+    max-width: 960px;
+    margin: 0 auto;
+    animation: fadeUp 0.8s ease-out both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.4rem 0.8rem;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 1.2rem;
+  }
+
+  .page-header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .page-header .intro {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 640px;
+    line-height: 1.7;
+  }
+
+  /* ─── SOURCE BADGES ─── */
+  .source-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .source-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .source-badge.monocept {
+    background: var(--mono-teal-light);
+    color: var(--mono-teal);
+  }
+
+  .source-badge.isb {
+    background: var(--isb-wine-light);
+    color: var(--isb-wine);
+  }
+
+  .source-badge.event {
+    background: var(--event-amber-light);
+    color: var(--event-amber);
+  }
+
+  .source-badge .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* ─── TILES CONTAINER ─── */
+  .tiles-section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+  }
+
+  /* ─── TILE ─── */
+  .tile {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .tile.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tile:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+
+  /* Tile Top Bar */
+  .tile-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .tile-bar.monocept { background: linear-gradient(135deg, #133d33, #1a6b5a); }
+  .tile-bar.isb { background: linear-gradient(135deg, #4a1a2e, #7a2e4a); }
+  .tile-bar.event { background: linear-gradient(135deg, #4a3a14, #8a6d2e); }
+  .tile-bar.pr-mock { background: linear-gradient(135deg, #1a2a4a, #2d5a9e); }
+
+  .tile-bar .tile-num {
+    opacity: 0.6;
+  }
+
+  .tile-bar .tile-source {
+    opacity: 0.8;
+  }
+
+  /* Tile Body */
+  .tile-body {
+    padding: 2rem 1.8rem;
+  }
+
+  .tile-body h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 0.4rem;
+  }
+
+  .tile-body .asset-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .tile-body .purpose {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+  }
+
+  .tile-body .purpose strong {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .purpose strong.teal { color: var(--mono-teal); }
+  .purpose strong.wine { color: var(--isb-wine); }
+  .purpose strong.blue { color: var(--accent); }
+  .purpose strong.amber { color: var(--event-amber); }
+
+  .tile-body .shows {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+
+  .shows em {
+    font-style: italic;
+    font-family: 'Instrument Serif', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  /* Excerpt Block */
+  .excerpt-block {
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 1.4rem 1.5rem;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .excerpt-block::before {
+    content: '"';
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem;
+    line-height: 1;
+    position: absolute;
+    top: 0.5rem;
+    left: 0.8rem;
+    opacity: 0.12;
+  }
+
+  .excerpt-block .excerpt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .excerpt-block .headline {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .excerpt-block .lede {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 0.6rem;
+  }
+
+  .excerpt-block .proof-cue {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  .excerpt-block .holding-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  /* Asset Bundle Grid */
+  .bundle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  .bundle-item {
+    background: var(--paper);
+    border-radius: 3px;
+    padding: 1rem 1.1rem;
+    border-left: 3px solid var(--event-amber);
+  }
+
+  .bundle-item h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--ink);
+  }
+
+  .bundle-item p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .bundle-item.full-width {
+    grid-column: 1 / -1;
+  }
+
+  /* Link CTA */
+  .tile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    margin-top: 0.8rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .tile-link.teal { color: var(--mono-teal); }
+  .tile-link.wine { color: var(--isb-wine); }
+
+  .tile-link:hover {
+    border-bottom-color: currentColor;
+  }
+
+  .tile-link .arrow {
+    transition: transform 0.3s;
+  }
+
+  .tile-link:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* ─── SIGNAL FOOTER ─── */
+  .signal-bar {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem;
+  }
+
+  .signal-inner {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem 1.8rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .signal-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    margin-top: 0.15rem;
+  }
+
+  .signal-inner p {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .footer-links a:hover { border-bottom-color: var(--accent); }
+
+  .footer-note {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .bundle-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bundle-item.full-width {
+      grid-column: auto;
+    }
+
+    .tile-body {
+      padding: 1.5rem 1.3rem;
+    }
+
+    nav {
+      padding: 0.8rem 1.2rem;
+    }
+
+    .nav-links { gap: 1rem; }
+
+    .signal-inner {
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .page-header {
+      padding: 7rem 1.5rem 2rem;
+    }
+
+    .tiles-section,
+    .signal-bar {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <a href="index.html" class="nav-name">Suchetana Bauri</a>
+  <div class="nav-links">
+    <a href="index.html">Cover</a>
+    <a href="case-studies.html">Case Studies</a>
+    <a href="pr-writing.html" class="active">PR Writing</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ PAGE HEADER ═══════════════ -->
+<header class="page-header">
+  <div class="tag">PR Writing Samples</div>
+  <h1>Media + Event Communications</h1>
+  <p class="intro">Brand narrative + editorial credibility — from case study storytelling to executive messaging packs, across both corporate brand and research-led publishing.</p>
+
+  <div class="source-row">
+    <span class="source-badge monocept"><span class="dot"></span> Monocept</span>
+    <span class="source-badge isb"><span class="dot"></span> ISB Insight</span>
+    <span class="source-badge event"><span class="dot"></span> Event Comms</span>
+  </div>
+</header>
+
+<!-- ═══════════════ TILES ═══════════════ -->
+<section class="tiles-section">
+
+  <!-- ─── TILE 1: Monocept Case Study ─── -->
+  <article class="tile">
+    <div class="tile-bar monocept">
+      <span class="tile-num">01</span>
+      <span class="tile-source">Monocept · Website</span>
+    </div>
+    <div class="tile-body">
+      <h2>Case Study Narrative</h2>
+      <div class="asset-type">Long-form · Automation success story</div>
+
+      <div class="purpose">
+        <strong class="teal">Purpose</strong>
+        Translate a technical delivery into a clear, outcome-led narrative for a broad audience.
+      </div>
+
+      <p class="shows">
+        Shows <em>strong "context → problem → solution → impact" storytelling</em> with credible specificity — cadence, integration, and reporting loop.
+      </p>
+
+      <div class="excerpt-block">
+        <div class="excerpt-label">Asset</div>
+        <p class="headline">Transforming Customer Category Updates</p>
+        <p class="lede">An automation success story: how systematic workflow redesign reduced manual effort and improved accuracy across customer operations.</p>
+      </div>
+
+      <a href="https://monocept.com" target="_blank" class="tile-link teal">
+        View on monocept.com <span class="arrow">→</span>
+      </a>
+    </div>
+  </article>
+
+  <!-- ─── TILE 2: Press Note ─── -->
+  <article class="tile">
+    <div class="tile-bar pr-mock">
+      <span class="tile-num">02</span>
+      <span class="tile-source">PR-Style Mock</span>
+    </div>
+    <div class="tile-body">
+      <h2>Press Note / Announcement</h2>
+      <div class="asset-type">Brand milestone announcement</div>
+
+      <div class="purpose">
+        <strong class="blue">Purpose</strong>
+        Position a delivery milestone as newsworthy and reputation-positive.
+      </div>
+
+      <div class="excerpt-block">
+        <div class="excerpt-label">Excerpt (redacted)</div>
+        <p class="headline">[Company] Automates [Workflow] to Improve Accuracy and Speed in [Domain]</p>
+        <p class="lede">A new automated service reduces manual effort, improves tracking, and enables faster action when exceptions occur.</p>
+        <p class="proof-cue">Proof-point cues: cadence · system integration · reporting loop</p>
+      </div>
+
+      <a href="https://monocept.com" target="_blank" class="tile-link teal">
+        View on monocept.com <span class="arrow">→</span>
+      </a>
+    </div>
+  </article>
+
+  <!-- ─── TILE 3: Holding Statement ─── -->
+  <article class="tile">
+    <div class="tile-bar pr-mock">
+      <span class="tile-num">03</span>
+      <span class="tile-source">PR-Style Mock</span>
+    </div>
+    <div class="tile-body">
+      <h2>Statement / Holding Response</h2>
+      <div class="asset-type">Fast-moving situation response</div>
+
+      <div class="purpose">
+        <strong class="blue">Purpose</strong>
+        Calm, factual, on-message response — no speculation.
+      </div>
+
+      <div class="excerpt-block">
+        <div class="excerpt-label">Excerpt</div>
+        <p class="holding-text">We're reviewing verified details with the relevant teams and will share confirmed updates through official channels as soon as they're available. Our priority is accuracy, timely resolution, and clear guidance for stakeholders.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ─── TILE 4: ISB Editorial Feature ─── -->
+  <article class="tile">
+    <div class="tile-bar isb">
+      <span class="tile-num">04</span>
+      <span class="tile-source">ISB Insight · Editorial</span>
+    </div>
+    <div class="tile-body">
+      <h2>Editorial Feature — Research Bytes</h2>
+      <div class="asset-type">Philanthropy / CSR category · Research-led article</div>
+
+      <div class="purpose">
+        <strong class="wine">Purpose</strong>
+        Make complex topics accessible, evidence-informed, and scannable for a broad readership.
+      </div>
+
+      <p class="shows">
+        Shows <em>framing, synthesis, responsible tone, and credibility standards</em> in editorial publishing — turning academic research into clear, engaging narrative.
+      </p>
+
+      <a href="https://isbinsight.isb.edu" target="_blank" class="tile-link wine">
+        View on isbinsight.isb.edu <span class="arrow">→</span>
+      </a>
+    </div>
+  </article>
+
+  <!-- ─── TILE 5: ISB Interview Storytelling ─── -->
+  <article class="tile">
+    <div class="tile-bar isb">
+      <span class="tile-num">05</span>
+      <span class="tile-source">ISB Insight · Interview</span>
+    </div>
+    <div class="tile-body">
+      <h2>Interview Storytelling — Executive Feature</h2>
+      <div class="asset-type">Long-form interview · Philanthropy category</div>
+
+      <div class="purpose">
+        <strong class="wine">Purpose</strong>
+        Shape interviews into structured narratives with quotable clarity and consistent voice.
+      </div>
+
+      <p class="shows">
+        Shows <em>editorial judgement, narrative arc, and clarity without losing nuance</em> — exemplified by features such as the Kailash Satyarthi interview.
+      </p>
+
+      <a href="https://isbinsight.isb.edu" target="_blank" class="tile-link wine">
+        View on isbinsight.isb.edu <span class="arrow">→</span>
+      </a>
+    </div>
+  </article>
+
+  <!-- ─── TILE 6: Event Comms Pack ─── -->
+  <article class="tile">
+    <div class="tile-bar event">
+      <span class="tile-num">06</span>
+      <span class="tile-source">Event Comms · Mock Pack</span>
+    </div>
+    <div class="tile-body">
+      <h2>Event Comms + Executive Messaging Pack</h2>
+      <div class="asset-type">Full asset bundle · Portable sample</div>
+
+      <div class="purpose">
+        <strong class="amber">Purpose</strong>
+        Ensure "one voice" across leadership and teams — drive attendance and crisp takeaways.
+      </div>
+
+      <div class="bundle-grid">
+        <div class="bundle-item">
+          <h4>Invite + Agenda</h4>
+          <p>What attendees will learn, outcomes, and CTA.</p>
+        </div>
+        <div class="bundle-item">
+          <h4>Exec Email</h4>
+          <p>Message hierarchy + next steps for leadership.</p>
+        </div>
+        <div class="bundle-item">
+          <h4>Talking Points</h4>
+          <p>5–7 bullets + proof points for spokespeople.</p>
+        </div>
+        <div class="bundle-item">
+          <h4>Mini-FAQ</h4>
+          <p>Objections → answers for predictable questions.</p>
+        </div>
+        <div class="bundle-item full-width">
+          <h4>Post-Event Highlights</h4>
+          <p>Key takeaways + next actions + owners — for distribution to attendees and stakeholders.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- ═══════════════ SIGNAL BAR ═══════════════ -->
+<section class="signal-bar">
+  <div class="signal-inner">
+    <span class="signal-icon">Signal</span>
+    <p>PR-ready writing + campaign narrative craft + executive storytelling, with high editorial standards across both brand (Monocept) and research-led publishing (ISB).</p>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-links">
+    <a href="index.html">← Cover</a>
+    <a href="case-studies.html">Case Studies</a>
+    <a href="https://linkedin.com/in/suchetanabauri" target="_blank">LinkedIn</a>
+    <a href="https://suchetanabauri.com" target="_blank">Portfolio</a>
+    <a href="mailto:suchetana.bauri@gmail.com">Email</a>
+  </div>
+  <p class="footer-note">Portfolio tailored for: Archetype — Project Manager (Content)</p>
+</footer>
+
+<!-- ═══════════════ SCROLL ANIMATION ═══════════════ -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = `${i * 0.08}s`;
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.tile').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
