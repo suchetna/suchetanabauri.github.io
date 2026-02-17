@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Messaging — Suchetana Bauri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f8f6f1;
+    --accent: #2d5a9e;
+    --accent-light: #e8eef6;
+    --muted: #6b6b6b;
+    --border: #d4d0c8;
+    --warm: #f0ece4;
+    --white: #ffffff;
+    --slate: #3a4a5c;
+    --slate-light: #e9ecf0;
+    --red-subtle: #c0392b;
+    --green-subtle: #27864a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(248, 246, 241, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav a { text-decoration: none; color: var(--ink); }
+
+  .nav-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--accent); }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    padding: 8rem 2rem 3rem;
+    max-width: 960px;
+    margin: 0 auto;
+    animation: fadeUp 0.8s ease-out both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.4rem 0.8rem;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 1.2rem;
+  }
+
+  .page-header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .page-header .intro {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 640px;
+    line-height: 1.7;
+  }
+
+  .use-case {
+    margin-top: 1.5rem;
+    padding: 1rem 1.3rem;
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 3px 3px 0;
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ─── DOCUMENT PANELS ─── */
+  .panels {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+  }
+
+  .panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 1.8rem;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .panel.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .panel:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+  }
+
+  /* Panel Header */
+  .panel-header {
+    background: linear-gradient(135deg, #1e2d3d, var(--slate));
+    color: white;
+    padding: 1.2rem 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .panel-header .panel-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .panel-header .panel-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  /* Panel Meta */
+  .panel-meta {
+    padding: 1.5rem 1.8rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .meta-item {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .meta-item strong {
+    font-weight: 600;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--slate);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  /* Panel Body */
+  .panel-body {
+    padding: 0 1.8rem 2rem;
+  }
+
+  .panel-body h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Document Sections */
+  .doc-section {
+    margin-bottom: 1.8rem;
+  }
+
+  .doc-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .doc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .doc-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .doc-text {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.7;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+  }
+
+  .doc-text .placeholder {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  /* Numbered Items */
+  .doc-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .doc-item {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .doc-item .item-marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+    width: 18px;
+  }
+
+  .doc-item .item-text .placeholder {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  .doc-item .owner-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--warm);
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  /* Risk Items */
+  .risk-item {
+    background: var(--paper);
+    border-radius: 3px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.6rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .risk-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .risk-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .risk-icon.risk {
+    background: #fde8e8;
+    color: var(--red-subtle);
+  }
+
+  .risk-icon.mitigation {
+    background: #e6f4ea;
+    color: var(--green-subtle);
+  }
+
+  .risk-text {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .risk-text .mitigation-text {
+    color: var(--green-subtle);
+    font-size: 0.82rem;
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* ─── TALKING POINTS ─── */
+  .tp-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .tp-item {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tp-item:last-child {
+    border-bottom: none;
+  }
+
+  .tp-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: white;
+    background: var(--accent);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .tp-content h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .tp-content p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .tp-content .mini-line {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--accent);
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* ─── FAQ ─── */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .faq-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-q {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: white;
+    background: var(--slate);
+    padding: 0.2rem 0.45rem;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    letter-spacing: 0.05em;
+  }
+
+  .faq-text {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .faq-rule {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.6rem 1rem;
+    border-radius: 3px;
+    margin-top: 1rem;
+  }
+
+  /* ─── POST-EVENT SECTIONS ─── */
+  .event-section {
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 1.3rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .event-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .event-section h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 0.7rem;
+  }
+
+  .event-section p,
+  .event-section li {
+    font-size: 0.85rem;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .event-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-left: 0;
+  }
+
+  .event-bullets li::before {
+    content: '→ ';
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ─── BEFORE/AFTER ─── */
+  .ba-panel {
+    margin-top: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .ba-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.2rem;
+    color: var(--muted);
+    background: var(--warm);
+    text-align: center;
+  }
+
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ba-col {
+    padding: 1.3rem 1.4rem;
+  }
+
+  .ba-col.before {
+    background: #fdf6f5;
+    border-right: 1px solid var(--border);
+  }
+
+  .ba-col.after {
+    background: #f3faf5;
+  }
+
+  .ba-col .ba-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+
+  .ba-col.before .ba-label { color: var(--red-subtle); }
+  .ba-col.after .ba-label { color: var(--green-subtle); }
+
+  .ba-col p {
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  .ba-col.before p {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(192, 57, 43, 0.3);
+  }
+
+  .ba-col.after p {
+    color: var(--ink);
+  }
+
+  .ba-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--green-subtle);
+    padding: 0.7rem 1.2rem;
+    background: var(--warm);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── ROLE FOOTER ─── */
+  .role-bar {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem;
+  }
+
+  .role-inner {
+    background: var(--slate-light);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.3rem 1.6rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .role-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate);
+    background: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    margin-top: 0.15rem;
+  }
+
+  .role-inner p {
+    font-size: 0.88rem;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .footer-links a:hover { border-bottom-color: var(--accent); }
+
+  .footer-note {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .ba-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ba-col.before {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-body {
+      padding: 0 1.3rem 1.5rem;
+    }
+
+    .panel-meta {
+      padding: 1.2rem 1.3rem 0;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    nav { padding: 0.8rem 1.2rem; }
+    .nav-links { gap: 0.8rem; }
+
+    .role-inner {
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .page-header { padding: 7rem 1.5rem 2rem; }
+    .panels, .role-bar { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <a href="index.html" class="nav-name">Suchetana Bauri</a>
+  <div class="nav-links">
+    <a href="index.html">Cover</a>
+    <a href="case-studies.html">Cases</a>
+    <a href="pr-writing.html">PR Writing</a>
+    <a href="exec-messaging.html" class="active">Exec Messaging</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ PAGE HEADER ═══════════════ -->
+<header class="page-header">
+  <div class="tag">Executive Communications</div>
+  <h1>Executive Messaging &amp; Program Clarity</h1>
+  <p class="intro">FAQs · Briefs · Leadership Packs — turning complex initiatives into leadership-ready communication that is clear, consistent, and action-oriented.</p>
+
+  <div class="use-case">
+    <strong>Use case:</strong> Turning complex initiatives into leadership-ready communication packs that are clear, consistent, and action-oriented.
+  </div>
+</header>
+
+<!-- ═══════════════ PANELS ═══════════════ -->
+<section class="panels">
+
+  <!-- ─── PANEL 1: BRIEFING NOTE ─── -->
+  <article class="panel">
+    <div class="panel-header">
+      <span class="panel-num">01</span>
+      <span class="panel-type">Briefing Note</span>
+    </div>
+    <div class="panel-meta">
+      <div class="meta-item">
+        <strong>Asset</strong>
+        Executive Brief — <span class="placeholder">[Program/Initiative Name]</span>
+      </div>
+      <div class="meta-item">
+        <strong>Audience</strong>
+        Leadership / Spokespersons / Program owners
+      </div>
+      <div class="meta-item">
+        <strong>Purpose</strong>
+        Align on decisions, risks, and next steps
+      </div>
+    </div>
+    <div class="panel-body">
+      <h2>Briefing Note</h2>
+
+      <!-- Problem -->
+      <div class="doc-section">
+        <div class="doc-label">Problem — what's happening + why it matters</div>
+        <div class="doc-text">
+          Teams are experiencing <span class="placeholder">[confusion / inconsistent adoption / duplicated effort / delays]</span> due to <span class="placeholder">[process/tool change]</span> being interpreted differently across <span class="placeholder">[regions/functions]</span>. This increases risk of <span class="placeholder">[missed deadlines / customer impact / operational errors]</span> and reduces confidence in execution.
+        </div>
+      </div>
+
+      <!-- Decision -->
+      <div class="doc-section">
+        <div class="doc-label">Decision — what we are doing now</div>
+        <div class="doc-text">
+          Approve and communicate a single operating approach:
+        </div>
+        <div class="doc-items" style="margin-top: 0.8rem;">
+          <div class="doc-item">
+            <span class="item-marker">01</span>
+            <span class="item-text"><span class="placeholder">[Decision 1]</span> (effective <span class="placeholder">[date]</span>)</span>
+          </div>
+          <div class="doc-item">
+            <span class="item-marker">02</span>
+            <span class="item-text"><span class="placeholder">[Decision 2]</span> (owners: <span class="placeholder">[function/role]</span>)</span>
+          </div>
+          <div class="doc-item">
+            <span class="item-marker">03</span>
+            <span class="item-text"><span class="placeholder">[Decision 3]</span> (new workflow: <span class="placeholder">[one-line description]</span>)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Risks -->
+      <div class="doc-section">
+        <div class="doc-label">Risks — what could go wrong + mitigations</div>
+        <div class="risk-item">
+          <span class="risk-icon risk">Risk</span>
+          <div class="risk-text">
+            Adoption delays due to unclear "what changes for me"
+            <span class="mitigation-text">→ Mitigation: role-based guidance + FAQs + office hours</span>
+          </div>
+        </div>
+        <div class="risk-item">
+          <span class="risk-icon risk">Risk</span>
+          <div class="risk-text">
+            Mixed messaging across leaders
+            <span class="mitigation-text">→ Mitigation: talking points + message hierarchy + "say/do" toolkit</span>
+          </div>
+        </div>
+        <div class="risk-item">
+          <span class="risk-icon risk">Risk</span>
+          <div class="risk-text">
+            Exceptions/failures not visible
+            <span class="mitigation-text">→ Mitigation: reporting loop + escalation path + daily/weekly summaries</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Steps -->
+      <div class="doc-section">
+        <div class="doc-label">Next steps — what happens next + owners</div>
+        <div class="doc-items">
+          <div class="doc-item">
+            <span class="item-marker">→</span>
+            <span class="item-text">Publish <span class="placeholder">[announcement/resource hub]</span> by <span class="placeholder">[date]</span> <span class="owner-tag">Owner: [name/role]</span></span>
+          </div>
+          <div class="doc-item">
+            <span class="item-marker">→</span>
+            <span class="item-text">Leadership cascade using talking points by <span class="placeholder">[date]</span> <span class="owner-tag">Owner: [name/role]</span></span>
+          </div>
+          <div class="doc-item">
+            <span class="item-marker">→</span>
+            <span class="item-text">Run <span class="placeholder">[townhall/webinar]</span> and collect top questions <span class="owner-tag">Owner: [name/role]</span></span>
+          </div>
+          <div class="doc-item">
+            <span class="item-marker">→</span>
+            <span class="item-text">Share post-event report + updates <span class="owner-tag">Owner: [name/role]</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ─── PANEL 2: TALKING POINTS ─── -->
+  <article class="panel">
+    <div class="panel-header">
+      <span class="panel-num">02</span>
+      <span class="panel-type">Talking Points</span>
+    </div>
+    <div class="panel-meta">
+      <div class="meta-item">
+        <strong>Asset</strong>
+        Leadership Talking Points — <span class="placeholder">[Initiative]</span>
+      </div>
+    </div>
+    <div class="panel-body">
+      <h2>Talking Points</h2>
+
+      <div class="tp-grid">
+        <div class="tp-item">
+          <span class="tp-num">1</span>
+          <div class="tp-content">
+            <h3>What's changing</h3>
+            <p><span class="placeholder">[One-line change description]</span></p>
+          </div>
+        </div>
+        <div class="tp-item">
+          <span class="tp-num">2</span>
+          <div class="tp-content">
+            <h3>Why now</h3>
+            <p><span class="placeholder">[1-line business/program rationale]</span></p>
+          </div>
+        </div>
+        <div class="tp-item">
+          <span class="tp-num">3</span>
+          <div class="tp-content">
+            <h3>What success looks like</h3>
+            <p><span class="placeholder">[2–3 measurable/observable outcomes]</span></p>
+          </div>
+        </div>
+        <div class="tp-item">
+          <span class="tp-num">4</span>
+          <div class="tp-content">
+            <h3>What teams should do next</h3>
+            <p><span class="placeholder">[3 clear actions + where to go]</span></p>
+            <span class="mini-line">"If you do only one thing this week: ___."</span>
+          </div>
+        </div>
+        <div class="tp-item">
+          <span class="tp-num">5</span>
+          <div class="tp-content">
+            <h3>Support &amp; reassurance</h3>
+            <p><span class="placeholder">[Help path + timeline + commitment to updates]</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ─── PANEL 3: FAQ ─── -->
+  <article class="panel">
+    <div class="panel-header">
+      <span class="panel-num">03</span>
+      <span class="panel-type">FAQ</span>
+    </div>
+    <div class="panel-meta">
+      <div class="meta-item">
+        <strong>Asset</strong>
+        FAQ — <span class="placeholder">[Initiative]</span> (for internal audiences)
+      </div>
+    </div>
+    <div class="panel-body">
+      <h2>FAQ — Anticipating Objections</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <span class="faq-q">Q1</span>
+          <span class="faq-text">Why are we making this change now?</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-q">Q2</span>
+          <span class="faq-text">What exactly is changing for my role/team?</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-q">Q3</span>
+          <span class="faq-text">What stays the same?</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-q">Q4</span>
+          <span class="faq-text">How will this affect timelines / deliverables / KPIs?</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-q">Q5</span>
+          <span class="faq-text">What should I do if I hit an exception or failure? (escalation path)</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-q">Q6</span>
+          <span class="faq-text">Where do I find the latest guidance and updates?</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-q">Q7</span>
+          <span class="faq-text">Who do I contact for help or approvals?</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-q">Q8</span>
+          <span class="faq-text">How will feedback be collected and incorporated?</span>
+        </div>
+      </div>
+
+      <div class="faq-rule">
+        ✦ Answer style rule: "Answers must be actionable; avoid policy soup."
+      </div>
+    </div>
+  </article>
+
+  <!-- ─── PANEL 4: POST-EVENT REPORT ─── -->
+  <article class="panel">
+    <div class="panel-header">
+      <span class="panel-num">04</span>
+      <span class="panel-type">Post-Event Report</span>
+    </div>
+    <div class="panel-meta">
+      <div class="meta-item">
+        <strong>Asset</strong>
+        Post-Event One-Pager — <span class="placeholder">[Townhall/Webinar/Event]</span>
+      </div>
+      <div class="meta-item">
+        <strong>Audience</strong>
+        Leadership + teams who missed the session
+      </div>
+      <div class="meta-item">
+        <strong>Purpose</strong>
+        Capture what landed + what happens next
+      </div>
+    </div>
+    <div class="panel-body">
+      <h2>Post-Event Report</h2>
+
+      <div class="event-section">
+        <h3>What happened — quick snapshot</h3>
+        <ul class="event-bullets">
+          <li><span class="placeholder">[Event name]</span> held on <span class="placeholder">[date]</span> with <span class="placeholder">[audience type]</span></li>
+          <li>Focus: <span class="placeholder">[what we covered]</span></li>
+          <li>Q&amp;A themes: <span class="placeholder">[top 3 themes]</span></li>
+        </ul>
+      </div>
+
+      <div class="event-section">
+        <h3>What landed — signals + clarity wins</h3>
+        <ul class="event-bullets">
+          <li>Teams responded strongly to <span class="placeholder">[benefit/outcome]</span></li>
+          <li>Main point of confusion: <span class="placeholder">[one issue]</span></li>
+          <li>Decisions reinforced: <span class="placeholder">[2 bullets]</span></li>
+        </ul>
+      </div>
+
+      <div class="event-section">
+        <h3>Next actions — owned + timed</h3>
+        <ul class="event-bullets">
+          <li>Update FAQ with top questions by <span class="placeholder">[date]</span> — <span class="owner-tag">Owner: [role]</span></li>
+          <li>Publish revised guidance on <span class="placeholder">[SharePoint/resource hub]</span> by <span class="placeholder">[date]</span> — <span class="owner-tag">Owner: [role]</span></li>
+          <li>Send follow-up comms to <span class="placeholder">[audience]</span> by <span class="placeholder">[date]</span> — <span class="owner-tag">Owner: [role]</span></li>
+        </ul>
+      </div>
+
+      <!-- Before / After -->
+      <div class="ba-panel">
+        <div class="ba-header">Before → After Edit — Editorial Rigor</div>
+        <div class="ba-grid">
+          <div class="ba-col before">
+            <div class="ba-label">Before (jargon-heavy)</div>
+            <p>"Teams are requested to operationalize the revised governance mechanism for stakeholder-aligned enablement, ensuring adherence to the updated framework and leveraging the integrated escalation pathways."</p>
+          </div>
+          <div class="ba-col after">
+            <div class="ba-label">After (human, actionable)</div>
+            <p>"Starting [date], use the new workflow for [task]. If something breaks, raise it via [channel] so we can fix it fast. The latest steps live on [resource hub]."</p>
+          </div>
+        </div>
+        <div class="ba-caption">Reduced ambiguity, improved readability, and made actions obvious.</div>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- ═══════════════ ROLE BAR ═══════════════ -->
+<section class="role-bar">
+  <div class="role-inner">
+    <span class="role-label">My Role</span>
+    <p>Narrative architect + primary writer/editor + approvals coordinator + quality gate for executive-ready communications.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-links">
+    <a href="index.html">← Cover</a>
+    <a href="case-studies.html">Case Studies</a>
+    <a href="pr-writing.html">PR Writing</a>
+    <a href="https://linkedin.com/in/suchetanabauri" target="_blank">LinkedIn</a>
+    <a href="https://suchetanabauri.com" target="_blank">Portfolio</a>
+    <a href="mailto:suchetana.bauri@gmail.com">Email</a>
+  </div>
+  <p class="footer-note">Portfolio tailored for: Archetype — Project Manager (Content)</p>
+</footer>
+
+<!-- ═══════════════ SCROLL ANIMATION ═══════════════ -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.06 });
+
+  document.querySelectorAll('.panel').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
